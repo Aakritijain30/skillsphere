@@ -53,6 +53,7 @@ function Navbar() {
             <>
               <Link to="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
               <Link to="/profile" style={{ color: 'white', textDecoration: 'none' }}>Profile</Link>
+              <Link to="/payment" style={{ color: 'white', textDecoration: 'none' }}>💳 Pay</Link>
               <Link to="/notifications" style={{ color: 'white', textDecoration: 'none' }}>🔔</Link>
               {user.role === 'admin' && (
                 <Link to="/admin" style={{ color: 'white', textDecoration: 'none' }}>Admin</Link>
@@ -88,6 +89,7 @@ function Navbar() {
             <>
               <Link to="/dashboard" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
               <Link to="/profile" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>Profile</Link>
+              <Link to="/payment" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>💳 Pay</Link>
               <Link to="/notifications" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>🔔 Notifications</Link>
               {user.role === 'admin' && (
                 <Link to="/admin" onClick={() => setMenuOpen(false)} style={{ color: 'white', textDecoration: 'none' }}>Admin</Link>
