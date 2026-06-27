@@ -67,3 +67,11 @@ body {
     padding: 20px !important;
   }
 }
+@media (max-width: 768px) {
+  .hamburger {
+    display: block !important;
+  }
+  .desktop-menu {
+    display: none !important;
+  }
+}

@@ -121,7 +121,7 @@ function GigListPage() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: '15px', marginBottom: '25px' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
