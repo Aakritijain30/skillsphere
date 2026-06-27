@@ -79,7 +79,7 @@ function ProfilePage() {
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '20px' }}>
           <div style={{
-            width: '80px', height: '80px', borderRadius: '50%',
+            width: '80px', height: '80px', borderRadius: '50%', minWidth: '80px', minHeight: '80px',
             background: '#1a1a2e', display: 'flex', alignItems: 'center',
             justifyContent: 'center', fontSize: '32px', color: 'white'
           }}>
