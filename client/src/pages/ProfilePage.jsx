@@ -87,7 +87,7 @@ function ProfilePage() {
           </div>
           <div>
             <h2 style={{ color: '#1a1a2e', marginBottom: '5px' }}>{user.name}</h2>
-            <p style={{ color: '#666', marginBottom: '5px' }}>{user.email}</p>
+            <p style={{ color: '#666', marginBottom: '5px', wordBreak: 'break-all' }}>{user.email}</p>
             <span style={{
               background: user.role === 'freelancer' ? '#3498db' : user.role === 'admin' ? '#e74c3c' : '#2ecc71',
               color: 'white', padding: '3px 12px', borderRadius: '15px', fontSize: '13px'
