@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://skillsphere-server-3b4k.onrender.com/api';
 
 function ReviewPage() {
   const { userId } = useParams();

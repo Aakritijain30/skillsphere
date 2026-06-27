@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://skillsphere-server-3b4k.onrender.com/api';
 
 function PaymentPage() {
   const { user } = useSelector((state) => state.auth);

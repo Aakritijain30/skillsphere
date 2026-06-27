@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://skillsphere-server-3b4k.onrender.com/api';
 
 export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {

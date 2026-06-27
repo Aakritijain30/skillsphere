@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const API = 'http://localhost:5000/api';
+const API = 'https://skillsphere-server-3b4k.onrender.com/api';
 
 function AdminPage() {
   const { user } = useSelector((state) => state.auth);
