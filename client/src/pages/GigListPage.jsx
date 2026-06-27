@@ -65,7 +65,7 @@ function GigListPage() {
         {token && (
           <button onClick={() => setShowForm(!showForm)} style={{
             background: '#2ecc71', color: 'white', border: 'none',
-            padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontSize: '15px'
+            padding: '8px 14px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', whiteSpace: 'nowrap'
           }}>
             {showForm ? 'Cancel' : '+ Post Gig'}
           </button>
