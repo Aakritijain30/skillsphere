@@ -1,0 +1,8 @@
+const router = require('express').Router();
+const { createOrder, verifyPayment } = require('../controllers/paymentController');
+const { protect } = require('../middleware/authMiddleware');
+
+router.post('/order', protect, createOrder);
+router.post('/verify', protect, verifyPayment);
+
+module.exports = router;
