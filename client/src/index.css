@@ -1,0 +1,69 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  /* Navbar */
+  nav {
+    flex-direction: column !important;
+    gap: 10px !important;
+    padding: 10px 15px !important;
+  }
+
+  nav div {
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+
+  /* Pages padding */
+  div[style*="max-width"] {
+    padding: 15px !important;
+  }
+
+  /* Grid layouts */
+  div[style*="grid-template-columns: repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  div[style*="grid-template-columns: repeat(auto-fill"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  div[style*="grid-template-columns: 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Tables */
+  table {
+    font-size: 12px !important;
+  }
+
+  td, th {
+    padding: 8px 6px !important;
+  }
+
+  /* Forms */
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+
+  /* Buttons */
+  button {
+    width: 100% !important;
+    margin-top: 5px !important;
+  }
+
+  /* Cards */
+  div[style*="width: 400px"] {
+    width: 95% !important;
+    padding: 20px !important;
+  }
+}
