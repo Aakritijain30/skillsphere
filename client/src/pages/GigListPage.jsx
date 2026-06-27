@@ -60,7 +60,7 @@ function GigListPage() {
   return (
     <div style={{ padding: '30px', maxWidth: '1100px', margin: '0 auto' }}>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '10px' }}>
         <h1 style={{ color: '#1a1a2e' }}>Available Gigs</h1>
         {token && (
           <button onClick={() => setShowForm(!showForm)} style={{
