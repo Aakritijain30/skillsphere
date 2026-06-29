@@ -35,3 +35,7 @@ require('./socket/socketHandler')(io);
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));  
+// Keep server awake
+setInterval(() => {
+  console.log('Server is awake');
+}, 840000);

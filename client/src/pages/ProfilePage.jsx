@@ -5,6 +5,95 @@ import { logout } from '../store/authSlice';
 import axios from 'axios';
 
 const API = 'https://skillsphere-server-3b4k.onrender.com/api';
+function ChangePasswordForm() {
+  const [form, setForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' });
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
+  const token = localStorage.getItem('token');
+
+  const handleChange = async () => {
+    if (form.newPassword !== form.confirmPassword) {
+      setError('New passwords do not match');
+      return;
+    }
+    try {
+      const res = await axios.put(
+        `${API}/auth/change-password`,
+        { oldPassword: form.oldPassword, newPassword: form.newPassword },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setMessage(res.data.message);
+      setError('');
+      setForm({ oldPassword: '', newPassword: '', confirmPassword: '' });
+    } catch (err) {
+      setError(err.response?.data?.message || 'Error changing password');
+    }
+  };
+
+  return (
+    <div>
+      {message && (
+        <div style={{
+          background: '#d4edda', color: '#155724', padding: '10px',
+          borderRadius: '5px', marginBottom: '15px'
+        }}>
+          {message}
+        </div>
+      )}
+      {error && (
+        <div style={{
+          background: '#ffe0e0', color: '#e74c3c', padding: '10px',
+          borderRadius: '5px', marginBottom: '15px'
+        }}>
+          {error}
+        </div>
+      )}
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Old Password</label>
+        <input
+          type="password"
+          value={form.oldPassword}
+          onChange={(e) => setForm({ ...form, oldPassword: e.target.value })}
+          style={{
+            width: '100%', padding: '10px', border: '1px solid #ddd',
+            borderRadius: '5px', boxSizing: 'border-box'
+          }}
+        />
+      </div>
+      <div style={{ marginBottom: '15px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>New Password</label>
+        <input
+          type="password"
+          value={form.newPassword}
+          onChange={(e) => setForm({ ...form, newPassword: e.target.value })}
+          style={{
+            width: '100%', padding: '10px', border: '1px solid #ddd',
+            borderRadius: '5px', boxSizing: 'border-box'
+          }}
+        />
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+        <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Confirm New Password</label>
+        <input
+          type="password"
+          value={form.confirmPassword}
+          onChange={(e) => setForm({ ...form, confirmPassword: e.target.value })}
+          style={{
+            width: '100%', padding: '10px', border: '1px solid #ddd',
+            borderRadius: '5px', boxSizing: 'border-box'
+          }}
+        />
+      </div>
+      <button onClick={handleChange} style={{
+        background: '#3498db', color: 'white', border: 'none',
+        padding: '12px 25px', borderRadius: '8px', cursor: 'pointer',
+        fontSize: '15px', width: '100%'
+      }}>
+        Change Password
+      </button>
+    </div>
+  );
+}
 
 function ProfilePage() {
   const { user } = useSelector((state) => state.auth);
@@ -274,3 +363,11 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
+{/* Change Password */}
+<div style={{
+  background: 'white', borderRadius: '10px',
+  boxShadow: '0 2px 10px rgba(0,0,0,0.1)', padding: '25px', marginBottom: '25px'
+}}>
+  <h3 style={{ color: '#1a1a2e', marginBottom: '15px' }}>Change Password</h3>
+  <ChangePasswordForm />
+</div>

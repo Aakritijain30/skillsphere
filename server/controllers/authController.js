@@ -74,3 +74,19 @@ exports.deleteAccount = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+exports.changePassword = async (req, res) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findById(req.user._id);
+    
+    const match = await user.matchPassword(oldPassword);
+    if (!match) return res.status(401).json({ message: 'Old password is wrong' });
+    
+    user.password = newPassword;
+    await user.save();
+    
+    res.json({ message: 'Password changed successfully!' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

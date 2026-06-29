@@ -8,3 +8,4 @@ router.get('/me', protect, getMe);
 router.delete('/delete', protect, require('../controllers/authController').deleteAccount);
 
 module.exports = router;
+router.put('/change-password', protect, require('../controllers/authController').changePassword);
