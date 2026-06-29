@@ -5,6 +5,7 @@ import { logout } from '../store/authSlice';
 import axios from 'axios';
 
 const API = 'https://skillsphere-server-3b4k.onrender.com/api';
+
 function ChangePasswordForm() {
   const [form, setForm] = useState({ oldPassword: '', newPassword: '', confirmPassword: '' });
   const [message, setMessage] = useState('');
@@ -198,7 +199,7 @@ function ProfilePage() {
             <button onClick={() => setEditing(!editing)} style={{
               background: editing ? '#e74c3c' : '#3498db',
               color: 'white', border: 'none',
-              padding: '8px 18px', borderRadius: '8px', cursor: 'pointer'
+              padding: '8px 18px', borderRadius: '8px', cursor: 'pointer', width: 'auto'
             }}>
               {editing ? 'Cancel' : 'Edit Profile'}
             </button>
@@ -315,6 +316,15 @@ function ProfilePage() {
         </div>
       )}
 
+      {/* Change Password */}
+      <div style={{
+        background: 'white', borderRadius: '10px',
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)', padding: '25px', marginBottom: '25px'
+      }}>
+        <h3 style={{ color: '#1a1a2e', marginBottom: '15px' }}>Change Password</h3>
+        <ChangePasswordForm />
+      </div>
+
       {/* Delete Account */}
       <div style={{
         background: 'white', borderRadius: '10px',
@@ -324,11 +334,10 @@ function ProfilePage() {
         <p style={{ color: '#666', marginBottom: '15px' }}>
           Once you delete your account, there is no going back.
         </p>
-
         {!showDeleteConfirm ? (
           <button onClick={() => setShowDeleteConfirm(true)} style={{
             background: 'white', color: '#e74c3c', border: '2px solid #e74c3c',
-            padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px'
+            padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', width: 'auto'
           }}>
             Delete My Account
           </button>
@@ -340,16 +349,16 @@ function ProfilePage() {
             <p style={{ color: '#e74c3c', fontWeight: 'bold', marginBottom: '15px' }}>
               Are you sure? This cannot be undone!
             </p>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap' }}>
               <button onClick={handleDeleteAccount} style={{
                 background: '#e74c3c', color: 'white', border: 'none',
-                padding: '10px 20px', borderRadius: '8px', cursor: 'pointer'
+                padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', width: 'auto'
               }}>
                 Yes, Delete My Account
               </button>
               <button onClick={() => setShowDeleteConfirm(false)} style={{
                 background: '#666', color: 'white', border: 'none',
-                padding: '10px 20px', borderRadius: '8px', cursor: 'pointer'
+                padding: '10px 20px', borderRadius: '8px', cursor: 'pointer', width: 'auto'
               }}>
                 Cancel
               </button>
@@ -363,11 +372,3 @@ function ProfilePage() {
 }
 
 export default ProfilePage;
-{/* Change Password */}
-<div style={{
-  background: 'white', borderRadius: '10px',
-  boxShadow: '0 2px 10px rgba(0,0,0,0.1)', padding: '25px', marginBottom: '25px'
-}}>
-  <h3 style={{ color: '#1a1a2e', marginBottom: '15px' }}>Change Password</h3>
-  <ChangePasswordForm />
-</div>
