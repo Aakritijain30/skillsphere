@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,6 +15,7 @@ function GigListPage() {
     title: '', description: '', category: '',
     skills: '', budgetMin: '', budgetMax: ''
   });
+  const { user } = useSelector((state) => state.auth);
   const token = localStorage.getItem('token');
 
   const fetchGigs = async () => {
