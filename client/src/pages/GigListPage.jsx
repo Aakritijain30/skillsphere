@@ -99,7 +99,7 @@ function GigListPage() {
         </button>
       </div>
 
-      {showForm && token && (
+      {showForm && (
         <div style={{
           background: 'white', padding: '25px', borderRadius: '10px',
           boxShadow: '0 2px 10px rgba(0,0,0,0.1)', marginBottom: '25px'
