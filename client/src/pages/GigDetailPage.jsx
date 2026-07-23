@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
@@ -11,6 +12,7 @@ function GigDetailPage() {
   const [loading, setLoading] = useState(true);
   const [form, setForm] = useState({ description: '', bidAmount: '', estimatedDays: '' });
   const [submitted, setSubmitted] = useState(false);
+  const { user } = useSelector((state) => state.auth);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
