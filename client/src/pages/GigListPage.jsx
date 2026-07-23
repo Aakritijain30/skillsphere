@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import axios from 'axios';
 
 const API = 'https://skillsphere-server-3b4k.onrender.com/api';
@@ -15,8 +15,8 @@ function GigListPage() {
     title: '', description: '', category: '',
     skills: '', budgetMin: '', budgetMax: ''
   });
-  const { user } = useSelector((state) => state.auth);
   const token = localStorage.getItem('token');
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const fetchGigs = async () => {
@@ -35,7 +35,7 @@ function GigListPage() {
   const handlePostGig = async (e) => {
     e.preventDefault();
     if (!token) {
-      alert('Please login first to post a gig!');
+      alert('Please login first!');
       navigate('/login');
       return;
     }
@@ -66,7 +66,7 @@ function GigListPage() {
       alert(err.response?.data?.message || 'Error deleting gig');
     }
   };
-  
+
   const filtered = gigs.filter(g =>
     g.title.toLowerCase().includes(search.toLowerCase()) &&
     (category === '' || g.category === category)
@@ -83,24 +83,23 @@ function GigListPage() {
 
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '10px' }}>
         <h1 style={{ color: '#1a1a2e' }}>Available Gigs</h1>
-        {token && (
-          <button onClick={() => {
-            if (!token) {
-              alert('Please login first!');
-              navigate('/login');
-              return;
-            }
-            setShowForm(!showForm);
-          }} style={{
-            background: '#2ecc71', color: 'white', border: 'none',
-            padding: '8px 14px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', whiteSpace: 'nowrap'
-          }}>
-            {showForm ? 'Cancel' : '+ Post Gig'}
-          </button>
-        )}
+        <button onClick={() => {
+          if (!token) {
+            alert('Please login first!');
+            navigate('/login');
+            return;
+          }
+          setShowForm(!showForm);
+        }} style={{
+          background: '#2ecc71', color: 'white', border: 'none',
+          padding: '8px 14px', borderRadius: '8px', cursor: 'pointer',
+          fontSize: '14px', whiteSpace: 'nowrap'
+        }}>
+          {showForm ? 'Cancel' : '+ Post Gig'}
+        </button>
       </div>
 
-      {showForm && (
+      {showForm && token && (
         <div style={{
           background: 'white', padding: '25px', borderRadius: '10px',
           boxShadow: '0 2px 10px rgba(0,0,0,0.1)', marginBottom: '25px'
@@ -183,7 +182,7 @@ function GigListPage() {
         </div>
       )}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', marginBottom: '25px' }}>
+      <div style={{ flexDirection: 'column', display: 'flex', gap: '15px', marginBottom: '25px' }}>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -255,20 +254,20 @@ function GigListPage() {
                     ₹{gig.budgetMin} - ₹{gig.budgetMax}
                   </span>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                  <Link to={`/gigs/${gig._id}`} style={{
-                    background: '#3498db', color: 'white', textDecoration: 'none',
-                    padding: '8px 16px', borderRadius: '5px', fontSize: '14px'
-                  }}>
-                    View Details
-                  </Link>
-                  {user && (user._id === gig.client?._id || user.role === 'admin') && (
-                  <button onClick={() => handleDeleteGig(gig._id)} style={{
-                    background: '#e74c3c', color: 'white', border: 'none',
-                    padding: '8px 16px', borderRadius: '5px', fontSize: '14px', cursor: 'pointer'
-                  }}>
-                    Delete
-                  </button>
-                  )}
+                    <Link to={`/gigs/${gig._id}`} style={{
+                      background: '#3498db', color: 'white', textDecoration: 'none',
+                      padding: '8px 16px', borderRadius: '5px', fontSize: '14px'
+                    }}>
+                      View Details
+                    </Link>
+                    {user && (user._id === gig.client?._id || user.role === 'admin') && (
+                      <button onClick={() => handleDeleteGig(gig._id)} style={{
+                        background: '#e74c3c', color: 'white', border: 'none',
+                        padding: '8px 16px', borderRadius: '5px', fontSize: '14px', cursor: 'pointer'
+                      }}>
+                        Delete
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
