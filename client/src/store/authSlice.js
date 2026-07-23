@@ -3,6 +3,21 @@ import axios from 'axios';
 
 const API = 'https://skillsphere-server-3b4k.onrender.com/api';
 
+// Verify token on app start
+export const verifyToken = createAsyncThunk('auth/verifyToken', async (_, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('token');
+    if (!token) return rejectWithValue('No token');
+    const res = await axios.get(`${API}/auth/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    return res.data;
+  } catch (err) {
+    localStorage.removeItem('token');
+    return rejectWithValue('Invalid token');
+  }
+});
+
 export const login = createAsyncThunk('auth/login', async (data, { rejectWithValue }) => {
   try {
     const res = await axios.post(`${API}/auth/login`, data);
@@ -43,6 +58,13 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      .addCase(verifyToken.fulfilled, (state, action) => {
+        state.user = action.payload;
+      })
+      .addCase(verifyToken.rejected, (state) => {
+        state.user = null;
+        state.token = null;
+      })
       .addCase(login.pending, (state) => {
         state.loading = true;
         state.error = null;
