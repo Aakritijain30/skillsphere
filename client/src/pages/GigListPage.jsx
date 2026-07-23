@@ -84,7 +84,14 @@ function GigListPage() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '25px', flexWrap: 'wrap', gap: '10px' }}>
         <h1 style={{ color: '#1a1a2e' }}>Available Gigs</h1>
         {token && (
-          <button onClick={() => setShowForm(!showForm)} style={{
+          <button onClick={() => {
+            if (!token) {
+              alert('Please login first!');
+              navigate('/login');
+              return;
+            }
+            setShowForm(!showForm);
+          }} style={{
             background: '#2ecc71', color: 'white', border: 'none',
             padding: '8px 14px', borderRadius: '8px', cursor: 'pointer', fontSize: '14px', whiteSpace: 'nowrap'
           }}>
