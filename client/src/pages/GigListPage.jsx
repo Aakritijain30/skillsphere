@@ -194,6 +194,10 @@ function GigListPage() {
           <option value="Design">Design</option>
           <option value="Writing">Writing</option>
           <option value="Marketing">Marketing</option>
+          <option value="Data Science">Data Science</option>
+          <option value="Video Editing">Video Editing</option>
+          <option value="Photography">Photography</option>
+          <option value="Other">Other</option>
         </select>
       </div>
 
