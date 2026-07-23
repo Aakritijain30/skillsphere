@@ -14,23 +14,30 @@ function ChatPage() {
   const [text, setText] = useState('');
   const [conversation, setConversation] = useState(null);
   const [typing, setTyping] = useState(false);
+  const [otherUser, setOtherUser] = useState(null);
   const socketRef = useRef(null);
   const messagesEndRef = useRef(null);
   const token = localStorage.getItem('token');
 
   useEffect(() => {
+    if (!user) return;
+
     // Connect socket
     socketRef.current = io(SOCKET_URL, {
-      query: { userId: user?._id }
+      query: { userId: user._id }
     });
 
-    // Get or create conversation
     const initChat = async () => {
       try {
+        // Get conversation
         const res = await axios.get(`${API}/messages/conversation/${userId}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
         setConversation(res.data);
+
+        // Get other user info
+        const otherUserId = res.data.participants.find(p => p._id !== user._id);
+        if (otherUserId) setOtherUser(otherUserId);
 
         // Join room
         socketRef.current.emit('joinRoom', res.data._id);
@@ -45,7 +52,7 @@ function ChatPage() {
       }
     };
 
-    if (user) initChat();
+    initChat();
 
     // Listen for new messages
     socketRef.current.on('receiveMessage', (msg) => {
@@ -58,7 +65,7 @@ function ChatPage() {
       setTimeout(() => setTyping(false), 2000);
     });
 
-    return () => socketRef.current.disconnect();
+    return () => socketRef.current?.disconnect();
   }, [userId, user, token]);
 
   useEffect(() => {
@@ -89,14 +96,42 @@ function ChatPage() {
     if (e.key === 'Enter') handleSend();
   };
 
-  return (
-    <div style={{ padding: '30px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1 style={{ color: '#1a1a2e', marginBottom: '25px' }}>Chat</h1>
+  if (!user) return (
+    <div style={{ textAlign: 'center', marginTop: '100px' }}>
+      <h2>Please login first</h2>
+    </div>
+  );
 
+  return (
+    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+
+      {/* Chat Header */}
       <div style={{
         background: 'white', borderRadius: '10px',
-        boxShadow: '0 2px 10px rgba(0,0,0,0.1)', overflow: 'hidden'
+        boxShadow: '0 2px 10px rgba(0,0,0,0.1)',
+        overflow: 'hidden'
       }}>
+        <div style={{
+          background: '#1a1a2e', padding: '15px 20px',
+          display: 'flex', alignItems: 'center', gap: '12px'
+        }}>
+          <div style={{
+            width: '40px', height: '40px', borderRadius: '50%',
+            background: '#3498db', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', color: 'white', fontWeight: 'bold', fontSize: '16px'
+          }}>
+            {otherUser?.name?.charAt(0).toUpperCase() || '?'}
+          </div>
+          <div>
+            <div style={{ color: 'white', fontWeight: 'bold' }}>
+              {otherUser?.name || 'Chat'}
+            </div>
+            <div style={{ color: '#a0a0a0', fontSize: '12px' }}>
+              {typing ? 'typing...' : 'online'}
+            </div>
+          </div>
+        </div>
+
         {/* Messages */}
         <div style={{
           height: '450px', overflowY: 'auto',
@@ -104,7 +139,7 @@ function ChatPage() {
         }}>
           {messages.length === 0 ? (
             <div style={{ textAlign: 'center', color: '#999', marginTop: '150px' }}>
-              No messages yet. Say hello!
+              No messages yet. Say hello! 👋
             </div>
           ) : (
             messages.map((msg, i) => {
@@ -125,11 +160,6 @@ function ChatPage() {
                     fontSize: '14px',
                     lineHeight: '1.5'
                   }}>
-                    {!isMe && (
-                      <div style={{ fontSize: '11px', color: '#999', marginBottom: '4px' }}>
-                        {msg.sender?.name}
-                      </div>
-                    )}
                     {msg.text}
                     <div style={{
                       fontSize: '10px',
@@ -169,7 +199,8 @@ function ChatPage() {
           <button onClick={handleSend} style={{
             background: '#3498db', color: 'white', border: 'none',
             padding: '12px 20px', borderRadius: '25px',
-            cursor: 'pointer', fontSize: '14px', fontWeight: 'bold'
+            cursor: 'pointer', fontSize: '14px', fontWeight: 'bold',
+            width: 'auto'
           }}>
             Send
           </button>

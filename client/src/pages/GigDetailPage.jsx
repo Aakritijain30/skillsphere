@@ -113,6 +113,15 @@ function GigDetailPage() {
             <div style={{ color: '#1a1a2e', fontWeight: 'bold' }}>
               {gig.client?.name}
             </div>
+            {token && user?._id !== gig.client?._id && (
+              <Link to={`/chat/${gig.client?._id}`} style={{
+                background: '#3498db', color: 'white', textDecoration: 'none',
+                padding: '6px 14px', borderRadius: '5px', fontSize: '13px',
+                display: 'inline-block', marginTop: '8px'
+              }}>
+                💬 Chat
+              </Link>
+            )}
           </div>
         </div>
 
