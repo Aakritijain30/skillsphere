@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const API = 'https://skillsphere-server-3b4k.onrender.com/api';
@@ -17,6 +17,7 @@ function GigListPage() {
   });
   const { user } = useSelector((state) => state.auth);
   const token = localStorage.getItem('token');
+  const navigate = useNavigate();
 
   const fetchGigs = async () => {
     try {
@@ -33,6 +34,11 @@ function GigListPage() {
 
   const handlePostGig = async (e) => {
     e.preventDefault();
+    if (!token) {
+      alert('Please login first to post a gig!');
+      navigate('/login');
+      return;
+    }
     try {
       await axios.post(`${API}/gigs`, {
         ...form,
