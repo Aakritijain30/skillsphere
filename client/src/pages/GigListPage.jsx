@@ -46,6 +46,18 @@ function GigListPage() {
     }
   };
 
+  const handleDeleteGig = async (gigId) => {
+    if (!window.confirm('Are you sure you want to delete this gig?')) return;
+    try {
+      await axios.delete(`${API}/gigs/${gigId}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      fetchGigs();
+    } catch (err) {
+      alert('Error deleting gig');
+    }
+  };
+  
   const filtered = gigs.filter(g =>
     g.title.toLowerCase().includes(search.toLowerCase()) &&
     (category === '' || g.category === category)
@@ -188,12 +200,20 @@ function GigListPage() {
                   <span style={{ color: '#2ecc71', fontWeight: 'bold', fontSize: '16px' }}>
                     ₹{gig.budgetMin} - ₹{gig.budgetMax}
                   </span>
+                  <div style={{ display: 'flex', gap: '8px' }}>
                   <Link to={`/gigs/${gig._id}`} style={{
                     background: '#3498db', color: 'white', textDecoration: 'none',
                     padding: '8px 16px', borderRadius: '5px', fontSize: '14px'
                   }}>
                     View Details
                   </Link>
+                  <button onClick={() => handleDeleteGig(gig._id)} style={{
+                    background: '#e74c3c', color: 'white', border: 'none',
+                    padding: '8px 16px', borderRadius: '5px', fontSize: '14px', cursor: 'pointer'
+                  }}>
+                    Delete
+                  </button>
+                  </div>
                 </div>
               </div>
             </div>
