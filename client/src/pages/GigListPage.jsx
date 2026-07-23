@@ -47,6 +47,7 @@ function GigListPage() {
   };
 
   const handleDeleteGig = async (gigId) => {
+    if (!token) return alert('Please login first');
     if (!window.confirm('Are you sure you want to delete this gig?')) return;
     try {
       await axios.delete(`${API}/gigs/${gigId}`, {
@@ -54,7 +55,7 @@ function GigListPage() {
       });
       fetchGigs();
     } catch (err) {
-      alert('Error deleting gig');
+      alert(err.response?.data?.message || 'Error deleting gig');
     }
   };
   
@@ -207,12 +208,14 @@ function GigListPage() {
                   }}>
                     View Details
                   </Link>
+                  {user && (user._id === gig.client?._id || user.role === 'admin') && (
                   <button onClick={() => handleDeleteGig(gig._id)} style={{
                     background: '#e74c3c', color: 'white', border: 'none',
                     padding: '8px 16px', borderRadius: '5px', fontSize: '14px', cursor: 'pointer'
                   }}>
                     Delete
                   </button>
+                  )}
                   </div>
                 </div>
               </div>

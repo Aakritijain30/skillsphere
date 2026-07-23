@@ -41,8 +41,14 @@ exports.getGigById = async (req, res) => {
 
 exports.deleteGig = async (req, res) => {
   try {
+    const gig = await Gig.findById(req.params.id);
+    if (!gig) return res.status(404).json({ message: 'Gig not found' });
+
+    if (gig.client.toString() !== req.user._id.toString() && req.user.role !== 'admin')
+      return res.status(403).json({ message: 'Not authorized to delete this gig' });
+
     await Gig.findByIdAndDelete(req.params.id);
-    res.json({ message: 'Gig delete ho gayi' });
+    res.json({ message: 'Gig deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
