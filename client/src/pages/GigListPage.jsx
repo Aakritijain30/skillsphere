@@ -94,25 +94,59 @@ function GigListPage() {
         }}>
           <h3 style={{ marginBottom: '20px' }}>Post a New Gig</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px' }}>
-            {[
-              { label: 'Title', key: 'title' },
-              { label: 'Category', key: 'category' },
-              { label: 'Skills (comma separated)', key: 'skills' },
-              { label: 'Min Budget (₹)', key: 'budgetMin' },
-              { label: 'Max Budget (₹)', key: 'budgetMax' },
-            ].map(field => (
-              <div key={field.key}>
-                <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>{field.label}</label>
-                <input
-                  value={form[field.key]}
-                  onChange={(e) => setForm({ ...form, [field.key]: e.target.value })}
-                  style={{
-                    width: '100%', padding: '10px', border: '1px solid #ddd',
-                    borderRadius: '5px', boxSizing: 'border-box'
-                  }}
-                />
-              </div>
-            ))}
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Title</label>
+              <input
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+                style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', boxSizing: 'border-box' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Category</label>
+              <select
+                value={form.category}
+                onChange={(e) => setForm({ ...form, category: e.target.value })}
+                style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', boxSizing: 'border-box' }}
+              >
+                <option value="">Select Category</option>
+                <option value="Web Development">Web Development</option>
+                <option value="Mobile Development">Mobile Development</option>
+                <option value="Design">Design</option>
+                <option value="Writing">Writing</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Video Editing">Video Editing</option>
+                <option value="Photography">Photography</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Skills (comma separated)</label>
+              <input
+                value={form.skills}
+                onChange={(e) => setForm({ ...form, skills: e.target.value })}
+                style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', boxSizing: 'border-box' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Min Budget (₹)</label>
+              <input
+                type="number"
+                value={form.budgetMin}
+                onChange={(e) => setForm({ ...form, budgetMin: e.target.value })}
+                style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', boxSizing: 'border-box' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Max Budget (₹)</label>
+              <input
+                type="number"
+                value={form.budgetMax}
+                onChange={(e) => setForm({ ...form, budgetMax: e.target.value })}
+                style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '5px', boxSizing: 'border-box' }}
+              />
+            </div>
             <div style={{ gridColumn: '1 / -1' }}>
               <label style={{ display: 'block', marginBottom: '5px', color: '#555' }}>Description</label>
               <textarea
