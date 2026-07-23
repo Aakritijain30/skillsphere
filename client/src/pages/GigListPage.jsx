@@ -30,7 +30,21 @@ function GigListPage() {
     }
   };
 
-  useEffect(() => { fetchGigs(); }, []);
+  useEffect(() => { fetchGigs(); 
+  // Clear invalid token
+  const verifyToken = async () => {
+    if (token) {
+      try {
+        await axios.get(`${API}/auth/me`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+      } catch (err) {
+        localStorage.removeItem('token');
+        window.location.reload();
+      }
+    }
+  };
+  verifyToken(); }, []);
 
   const handlePostGig = async (e) => {
     e.preventDefault();
